@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Fixed Top Navbar Example for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="fx-css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- For glyphicons -->
+    <link href="fx-css/glyphicons.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="fx-css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="fx-css/navbar-fixed-top.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="fx-js/ie-emulation-modes-warning.js"></script>
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">eyedroppa</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="fx-index.html">Gallery</a></li>
+            <li><a href="fx-upload.html">Upload</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="fx-signin.html">Sign in</a></li>
+                <li><a href="#">My Collection</a></li>
+                <li><a href="#">Sign out</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+         <!--  <ul class="nav navbar-nav navbar-right">
+            <li><a href="../navbar/">Default</a></li>
+            <li><a href="../navbar-static-top/">Static top</a></li>
+            <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+          </ul> -->
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>navbar example</h1>
+        <p>
+        <!-- current image for computing palette -->
+        <img src="fx-images/frog2.jpg" id="pic" /> 
+        </p>
+
+        <!-- temporary div to hold the palette. -->
+        <div id="palette"></div>
+
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="fx-js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="fx-js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="fx-js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+
+  <script type="text/javascript">
+        // Return the pixel given the imageData and index.
+        function getPixel(imgData, index) {
+        var i = index*4, d = imgData.data;
+        return [d[i],d[i+1],d[i+2],d[i+3]] // [R,G,B,A]
+        }
+
+        // Return the pixel give the imageDate and the x, y coordinate.
+        function getPixelXY(imgData, x, y) {
+        return getPixel(imgData, y*imgData.width+x);
+        }
+
+        // Create a canvas tag to hold the image.
+        var cvs = document.createElement('canvas'),
+        img = document.getElementById("pic");   // your image goes here
+
+        // Get the image data
+        cvs.width = img.width; cvs.height = img.height;
+        var ctx = cvs.getContext("2d");
+        ctx.drawImage(img,0,0,cvs.width,cvs.height);
+        var idt = ctx.getImageData(0,0,cvs.width,cvs.height);
+
+        var MAX_PALETTE_SIZE = 10;
+
+        // randomly choose MAX_PALETTE_SIZE coordinates.
+        function getRandomArbitrary(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        // Add the randomly chosen colors as div's to the html.
+        for (var i = 0; i < MAX_PALETTE_SIZE; i++) {
+        var x = getRandomArbitrary(0, img.width);
+        var y = getRandomArbitrary(0, img.height);
+   
+        // Use JQuery to append the new div as the child.
+        $('#palette').append("<div " + 
+          "style='display:inline-block;background-color:rgba(" + getPixelXY(idt, x, y) + ");" + 
+          "height:80px; width:80px'></div>");
+        }
+  </script>
+</html>
