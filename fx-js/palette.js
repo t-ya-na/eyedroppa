@@ -39,7 +39,7 @@ function addPalette(srcImage, paletteContainer) {
     // Use JQuery to append the new div as the child.
     paletteContainer.append("<div " + 
       "style='display:inline-block;background-color:rgba(" + getPixelXY(idt, x, y) + ");" + 
-      "height:80px; width:80px'></div>");
+      "height:50px; width:50px'></div>");
   }
 }
 
