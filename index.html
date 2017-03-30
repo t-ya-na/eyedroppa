@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fixed Top Navbar Example for Bootstrap</title>
+    <title>EyeDroppa</title>
 
     <!-- Bootstrap core CSS -->
     <link href="fx-css/bootstrap.min.css" rel="stylesheet">
@@ -47,7 +47,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="fx-index.html">Gallery</a></li>
+            <li class="active"><a href="index.html">Gallery</a></li>
             <li><a href="fx-upload.html">Upload</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
@@ -96,46 +96,12 @@
     <script src="fx-js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="fx-js/ie10-viewport-bug-workaround.js"></script>
+    <script src="fx-js/palette.js"></script>
   </body>
 
   <script type="text/javascript">
-        // Return the pixel given the imageData and index.
-        function getPixel(imgData, index) {
-        var i = index*4, d = imgData.data;
-        return [d[i],d[i+1],d[i+2],d[i+3]] // [R,G,B,A]
-        }
-
-        // Return the pixel give the imageDate and the x, y coordinate.
-        function getPixelXY(imgData, x, y) {
-        return getPixel(imgData, y*imgData.width+x);
-        }
-
-        // Create a canvas tag to hold the image.
-        var cvs = document.createElement('canvas'),
-        img = document.getElementById("pic");   // your image goes here
-
-        // Get the image data
-        cvs.width = img.width; cvs.height = img.height;
-        var ctx = cvs.getContext("2d");
-        ctx.drawImage(img,0,0,cvs.width,cvs.height);
-        var idt = ctx.getImageData(0,0,cvs.width,cvs.height);
-
-        var MAX_PALETTE_SIZE = 10;
-
-        // randomly choose MAX_PALETTE_SIZE coordinates.
-        function getRandomArbitrary(min, max) {
-        return Math.floor(Math.random() * (max - min) + min);
-        }
-
-        // Add the randomly chosen colors as div's to the html.
-        for (var i = 0; i < MAX_PALETTE_SIZE; i++) {
-        var x = getRandomArbitrary(0, img.width);
-        var y = getRandomArbitrary(0, img.height);
-   
-        // Use JQuery to append the new div as the child.
-        $('#palette').append("<div " + 
-          "style='display:inline-block;background-color:rgba(" + getPixelXY(idt, x, y) + ");" + 
-          "height:80px; width:80px'></div>");
-        }
+    var srcImage = document.getElementById("pic")
+    var paletteContainer = $('#palette');
+    addPalette(srcImage, paletteContainer);
   </script>
 </html>

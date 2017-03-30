@@ -22,6 +22,8 @@
     <!-- Custom styles for this template -->
     <link href="fx-css/navbar-fixed-top.css" rel="stylesheet">
 
+    <link href="fx-css/fx-upload.css" type="text/css" rel="stylesheet">
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="fx-js/ie-emulation-modes-warning.js"></script>
@@ -47,7 +49,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="fx-index.html">Gallery</a></li>
+            <li><a href="index.html">Gallery</a></li>
              <li class="active"><a href="fx-upload.html">Upload</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
@@ -77,10 +79,12 @@
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h1>upload</h1>
-        <div id="upload-box"><a onclick="uploadPhoto()" class="btn btn-lg btn-primary" href="#fx-navbar" role="button">Upload Image &raquo;</a>
-        </div>
+        <input class="btn btn-lg btn-primary" href="#fx-navbar" role="button" type="file"><br> 
+        <img id="uploadedImage" src="" alt="">  
+<!--         <div id="upload-box">
+        </div> -->
         <!-- temporary div to hold the palette. -->
-        <div id="palette">Swatches</div>
+        <div id="palette"></div>
       </div>
     </div>
 
@@ -93,16 +97,28 @@
     <script src="fx-js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="fx-js/ie10-viewport-bug-workaround.js"></script>
+    <script src="fx-js/palette.js"></script>
 
-<script>
-    function uploadPhoto() {
-      alert("uploadingPhoto");
-    }
-</script>
+    <!-- TODO: refactor into own module. -->
+    <script>
+      $(function () {
+          $(":file").change(function () {
+              if (this.files && this.files[0]) {
+                  var reader = new FileReader();
+                  reader.onload = imageIsLoaded;
+                  reader.readAsDataURL(this.files[0]);
+              }
+          });
+      });
 
-
-
-
+      function imageIsLoaded(e) {
+          $('#uploadedImage').attr('src', e.target.result);
+          $('#uploadedImage').load(function() {
+            var p = document.getElementById('uploadedImage');
+            var paletteContainer = $('#palette');
+            addPalette(p, paletteContainer);
+          })
+      };
+    </script>
   </body>
-
 </html>
